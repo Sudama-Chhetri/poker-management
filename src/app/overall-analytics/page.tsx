@@ -201,12 +201,62 @@ const OverallAnalyticsPage: React.FC = () => {
     ],
   };
 
-  return (
-    <div className="bg-gray-950 text-white min-h-screen p-8">
-      <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center text-yellow-400">Overall Player Analytics</h1>
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        labels: {
+          color: '#E5E7EB', // gray-200
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: function(context: any) {
+            let label = context.dataset.label || '';
+            if (label) {
+              label += ': ';
+            }
+            if (context.parsed.y !== null) {
+              label += new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(context.parsed.y);
+            }
+            return label;
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        ticks: {
+          color: '#D1D5DB', // gray-300
+          autoSkip: false, // Prevent labels from being skipped
+          maxRotation: 45, // Rotate labels to prevent overlap
+          minRotation: 45,
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)',
+        },
+      },
+      y: {
+        ticks: {
+          color: '#D1D5DB', // gray-300
+          callback: function(value: any) {
+            return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value);
+          }
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)',
+        },
+      },
+    },
+  };
 
-      <div className="mb-8 flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
-        <label htmlFor="sessionDate" className="text-base md:text-lg font-semibold text-gray-300">Filter by Date:</label>
+  return (
+    <div className="bg-gray-950 text-white min-h-screen p-4 sm:p-8">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center text-yellow-400">Overall Player Analytics</h1>
+
+      <div className="mb-6 sm:mb-8 flex flex-col md:flex-row justify-center items-center space-y-3 md:space-y-0 md:space-x-4">
+        <label htmlFor="sessionDate" className="text-base sm:text-lg font-semibold text-gray-300">Filter by Date:</label>
         <input
           type="date"
           id="sessionDate"
@@ -217,30 +267,30 @@ const OverallAnalyticsPage: React.FC = () => {
       </div>
 
       {/* Overall Key Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-center">
-        <div className="bg-gray-900 p-4 rounded-lg shadow-md border border-gray-800">
-          <p className="text-base md:text-lg text-gray-400">Overall Total Buy-in</p>
-          <p className="text-xl md:text-2xl font-bold text-yellow-400">₹{overallTotalBuyIn.toFixed(2)}</p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8 text-center">
+        <div className="bg-gray-900 p-3 sm:p-4 rounded-lg shadow-md border border-gray-800">
+          <p className="text-sm sm:text-base md:text-lg text-gray-400">Overall Total Buy-in</p>
+          <p className="text-xl sm:text-2xl font-bold text-yellow-400">₹{overallTotalBuyIn.toFixed(2)}</p>
         </div>
-        <div className="bg-gray-900 p-4 rounded-lg shadow-md border border-gray-800">
-          <p className="text-base md:text-lg text-gray-400">Overall Total Cash-out</p>
-          <p className="text-xl md:text-2xl font-bold text-green-400">₹{overallTotalCashOut.toFixed(2)}</p>
+        <div className="bg-gray-900 p-3 sm:p-4 rounded-lg shadow-md border border-gray-800">
+          <p className="text-sm sm:text-base md:text-lg text-gray-400">Overall Total Cash-out</p>
+          <p className="text-xl sm:text-2xl font-bold text-green-400">₹{overallTotalCashOut.toFixed(2)}</p>
         </div>
-        <div className="bg-gray-900 p-4 rounded-lg shadow-md border border-gray-800">
-          <p className="text-base md:text-lg text-gray-400">Overall Net Profit</p>
-          <p className={`text-xl md:text-2xl font-bold ${overallTotalProfit >= 0 ? 'text-green-500' : 'text-red-500'}`}>₹{overallTotalProfit.toFixed(2)}</p>
+        <div className="bg-gray-900 p-3 sm:p-4 rounded-lg shadow-md border border-gray-800">
+          <p className="text-sm sm:text-base md:text-lg text-gray-400">Overall Net Profit</p>
+          <p className={`text-xl sm:text-2xl font-bold ${overallTotalProfit >= 0 ? 'text-green-500' : 'text-red-500'}`}>₹{overallTotalProfit.toFixed(2)}</p>
         </div>
       </div>
 
       {/* All Sessions List by Date */}
-      <div className="mb-8 p-4 bg-gray-900 rounded-lg shadow-xl border border-gray-800">
-        <h3 className="text-lg md:text-xl font-bold mb-4 text-yellow-300">All Recorded Sessions (Day-wise)</h3>
+      <div className="mb-6 sm:mb-8 p-3 sm:p-4 bg-gray-900 rounded-lg shadow-xl border border-gray-800">
+        <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-yellow-300">All Recorded Sessions (Day-wise)</h3>
         {Object.keys(overallDailyProfit).length === 0 ? (
-          <p className="text-gray-400 text-base">No sessions recorded for the selected date.</p>
+          <p className="text-gray-400 text-sm sm:text-base">No sessions recorded for the selected date.</p>
         ) : (
           <ul className="space-y-2">
             {Object.entries(overallDailyProfit).sort(([dateA], [dateB]) => dateA.localeCompare(dateB)).map(([date, profit]) => (
-              <li key={date} className="flex justify-between items-center bg-gray-800 p-3 rounded-lg border border-gray-700 text-sm md:text-base">
+              <li key={date} className="flex justify-between items-center bg-gray-800 p-2 sm:p-3 rounded-lg border border-gray-700 text-xs sm:text-sm md:text-base">
                 <span className="text-gray-200 font-semibold">{formatDateToDDMMYYYY(date)}:</span>
                 <span className={`font-bold ${profit >= 0 ? 'text-green-400' : 'text-red-400'}`}>₹{profit.toFixed(2)}</span>
               </li>
@@ -252,19 +302,19 @@ const OverallAnalyticsPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
         <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-64 md:h-80 border border-gray-800">
           <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Net Profit by Player</h3>
-          <Bar data={netProfitChartData} options={{ maintainAspectRatio: false }} />
+          <Bar data={netProfitChartData} options={chartOptions} />
         </div>
         <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-64 md:h-80">
           <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Win Rate by Player</h3>
-          <Bar data={winRateChartData} options={{ maintainAspectRatio: false }} />
+          <Bar data={winRateChartData} options={chartOptions} />
         </div>
         <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-64 md:h-80">
           <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Overall Daily Profit/Loss</h3>
-          <Line data={overallDailyProfitChartData} options={{ maintainAspectRatio: false }} />
+          <Line data={overallDailyProfitChartData} options={chartOptions} />
         </div>
         <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-64 md:h-80 border border-gray-800">
           <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Overall Cumulative Profit Over Time</h3>
-          <Line data={overallCumulativeProfitChartData} options={{ maintainAspectRatio: false }} />
+          <Line data={overallCumulativeProfitChartData} options={chartOptions} />
         </div>
       </div>
     </div>
