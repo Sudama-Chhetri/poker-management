@@ -48,7 +48,8 @@ interface Session {
 const OverallAnalyticsPage: React.FC = () => {
   const [allPlayers, setAllPlayers] = useState<Player[]>([]);
   const [allSessions, setAllSessions] = useState<Session[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -70,21 +71,32 @@ const OverallAnalyticsPage: React.FC = () => {
   }, []);
 
   const calculateOverallStats = () => {
-    const filteredSessions = selectedDate
+    const filteredSessions = (startDate || endDate)
       ? allSessions.filter(session => {
-          const [sYear, sMonth, sDay] = session.sessionDate.split('-').map(Number);
-          const sessionDateObj = new Date(sYear, sMonth - 1, sDay); // Month is 0-indexed
+          const sessionDateStr = session.sessionDate.split('T')[0];
+          const sessionDateParts = sessionDateStr.split('-').map(Number);
+          const sessionTimestamp = Date.UTC(sessionDateParts[0], sessionDateParts[1] - 1, sessionDateParts[2]);
 
-          const [fYear, fMonth, fDay] = selectedDate.split('-').map(Number);
-          const filterDateObj = new Date(fYear, fMonth - 1, fDay); // Month is 0-indexed
+          if (startDate) {
+            const startDateParts = startDate.split('-').map(Number);
+            const startTimestamp = Date.UTC(startDateParts[0], startDateParts[1] - 1, startDateParts[2]);
+            if (sessionTimestamp < startTimestamp) {
+              return false;
+            }
+          }
 
-          return (
-            sessionDateObj.getFullYear() === filterDateObj.getFullYear() &&
-            sessionDateObj.getMonth() === filterDateObj.getMonth() &&
-            sessionDateObj.getDate() === filterDateObj.getDate()
-          );
+          if (endDate) {
+            const endDateParts = endDate.split('-').map(Number);
+            const endTimestamp = Date.UTC(endDateParts[0], endDateParts[1] - 1, endDateParts[2]);
+            if (sessionTimestamp > endTimestamp) {
+              return false;
+            }
+          }
+
+          return true;
         })
       : allSessions;
+
     const playerProfits: { [key: number]: number } = {};
     const playerSessionCounts: { [key: number]: number } = {};
     const playerWinCounts: { [key: number]: number } = {};
@@ -147,7 +159,7 @@ const OverallAnalyticsPage: React.FC = () => {
     };
   };
 
-  const { playerNames, netProfits, winRates, overallTotalProfit, overallTotalBuyIn, overallTotalCashOut, overallDailyProfit, overallCumulativeProfit } = useMemo(() => calculateOverallStats(), [allSessions, selectedDate]);
+  const { playerNames, netProfits, winRates, overallTotalProfit, overallTotalBuyIn, overallTotalCashOut, overallDailyProfit, overallCumulativeProfit } = useMemo(() => calculateOverallStats(), [allSessions, startDate, endDate]);
 
   if (allPlayers.length === 0 && allSessions.length === 0) {
     return <div className="bg-gray-950 text-white min-h-screen p-8 flex justify-center items-center text-xl">Loading overall analytics...</div>;
@@ -229,19 +241,16 @@ const OverallAnalyticsPage: React.FC = () => {
       x: {
         ticks: {
           color: '#D1D5DB', // gray-300
-          autoSkip: true, // Allow labels to be skipped if they overlap
-          autoSkipPadding: 20, // Increased padding between skipped labels
-          maxRotation: 0, // Prevent labels from rotating
-          minRotation: 0,
+          autoSkip: true,
+          maxRotation: 45,
+          minRotation: 45,
           font: {
-            size: 8, // Smallest font size for mobile
+            size: 10,
           },
-          padding: 5, // Add padding around labels
         },
         grid: {
-          display: false, // Remove grid lines
+          display: false,
         },
-        offset: true, // Ensure labels are centered under bars for bar charts
       },
       y: {
         ticks: {
@@ -250,11 +259,11 @@ const OverallAnalyticsPage: React.FC = () => {
             return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value);
           },
           font: {
-            size: 8, // Smallest font size for mobile
+            size: 10,
           },
         },
         grid: {
-          display: false, // Remove grid lines
+          display: false,
         },
       },
     },
@@ -265,14 +274,26 @@ const OverallAnalyticsPage: React.FC = () => {
       <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center text-yellow-400">Overall Player Analytics</h1>
 
       <div className="mb-6 sm:mb-8 flex flex-col md:flex-row justify-center items-center space-y-3 md:space-y-0 md:space-x-4">
-        <label htmlFor="sessionDate" className="text-base sm:text-lg font-semibold text-gray-300">Filter by Date:</label>
-        <input
-          type="date"
-          id="sessionDate"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-          className="bg-gray-800 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 border border-gray-700 w-full md:w-auto"
-        />
+        <div className="flex items-center space-x-2">
+            <label htmlFor="startDate" className="text-base sm:text-lg font-semibold text-gray-300">From:</label>
+            <input
+              type="date"
+              id="startDate"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              className="bg-gray-800 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 border border-gray-700"
+            />
+        </div>
+        <div className="flex items-center space-x-2">
+            <label htmlFor="endDate" className="text-base sm:text-lg font-semibold text-gray-300">To:</label>
+            <input
+              type="date"
+              id="endDate"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              className="bg-gray-800 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 border border-gray-700"
+            />
+        </div>
       </div>
 
       {/* Overall Key Stats */}
@@ -295,7 +316,7 @@ const OverallAnalyticsPage: React.FC = () => {
       <div className="mb-6 sm:mb-8 p-3 sm:p-4 bg-gray-900 rounded-lg shadow-xl border border-gray-800">
         <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-yellow-300">All Recorded Sessions (Day-wise)</h3>
         {Object.keys(overallDailyProfit).length === 0 ? (
-          <p className="text-gray-400 text-sm sm:text-base">No sessions recorded for the selected date.</p>
+          <p className="text-gray-400 text-sm sm:text-base">No sessions recorded for the selected date range.</p>
         ) : (
           <ul className="space-y-2">
             {Object.entries(overallDailyProfit).sort(([dateA], [dateB]) => dateA.localeCompare(dateB)).map(([date, profit]) => (
@@ -309,19 +330,19 @@ const OverallAnalyticsPage: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
-        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-56 md:h-72 border border-gray-700">
+        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-72 md:h-80 border border-gray-700">
           <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Net Profit by Player</h3>
           <Bar data={netProfitChartData} options={chartOptions} />
         </div>
-        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-56 md:h-72 border border-gray-700">
+        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-72 md:h-80 border border-gray-700">
           <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Win Rate by Player</h3>
           <Bar data={winRateChartData} options={chartOptions} />
         </div>
-        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-56 md:h-72 border border-gray-700">
+        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-72 md:h-80 border border-gray-700">
           <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Overall Daily Profit/Loss</h3>
           <Line data={overallDailyProfitChartData} options={chartOptions} />
         </div>
-        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-56 md:h-72 border border-gray-700">
+        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-72 md:h-80 border border-gray-700">
           <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Overall Cumulative Profit Over Time</h3>
           <Line data={overallCumulativeProfitChartData} options={chartOptions} />
         </div>
