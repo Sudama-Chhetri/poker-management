@@ -1,0 +1,91 @@
+[
+  {
+    "id": 1752137444178,
+    "playerId": 1752137400816,
+    "buyIn": 100,
+    "cashOut": 1500,
+    "gameType": "cash",
+    "sessionDate": "2025-07-10"
+  },
+  {
+    "id": 1752137546352,
+    "playerId": 1752137424783,
+    "buyIn": 300,
+    "cashOut": 1300,
+    "gameType": "cash",
+    "sessionDate": "2025-07-10"
+  },
+  {
+    "id": 1752137581379,
+    "playerId": 1752137424783,
+    "buyIn": 300,
+    "cashOut": 50,
+    "gameType": "cash",
+    "sessionDate": "2025-07-10"
+  },
+  {
+    "id": 1752137851367,
+    "playerId": 1752137817077,
+    "buyIn": 300,
+    "cashOut": 1500,
+    "gameType": "poker",
+    "sessionDate": "2025-07-10"
+  },
+  {
+    "id": 1752138878503,
+    "playerId": 1752138282914,
+    "buyIn": 300,
+    "cashOut": 500,
+    "gameType": "poker",
+    "sessionDate": "2025-07-10",
+    "betAmount": 600
+  },
+  {
+    "id": 1752139477832,
+    "playerId": 1752138811551,
+    "buyIn": 300,
+    "cashOut": 200,
+    "gameType": "poker",
+    "sessionDate": "2025-07-10"
+  },
+  {
+    "id": 1752139804738,
+    "playerId": 1752138282914,
+    "buyIn": 300,
+    "cashOut": 1296,
+    "gameType": "poker",
+    "sessionDate": "2025-07-10"
+  },
+  {
+    "id": 1752140482746,
+    "playerId": 1752138811551,
+    "buyIn": 300,
+    "cashOut": 200,
+    "gameType": "poker",
+    "sessionDate": "2025-07-10"
+  },
+  {
+    "id": 1752140499828,
+    "playerId": 1752140451369,
+    "buyIn": 300,
+    "cashOut": 1500,
+    "gameType": "poker",
+    "sessionDate": "2025-07-10"
+  },
+  {
+    "id": 1752141974773,
+    "playerId": 1752141952200,
+    "buyIn": 300,
+    "cashOut": 1200,
+    "gameType": "poker",
+    "sessionDate": "2025-07-10"
+  },
+  {
+    "id": 1752142567195,
+    "playerId": 1752142546703,
+    "buyIn": 300,
+    "cashOut": 1200,
+    "gameType": "poker",
+    "sessionDate": "2025-07-10"
+  }
+]
