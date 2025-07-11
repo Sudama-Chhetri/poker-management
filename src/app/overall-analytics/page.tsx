@@ -252,10 +252,11 @@ const OverallAnalyticsPage: React.FC = () => {
         ticks: {
           color: '#D1D5DB', // gray-300
           autoSkip: true,
-          maxRotation: 45,
-          minRotation: 45,
+          autoSkipPadding: 10, // Adjust padding for better spacing
+          maxRotation: 0, // Prevent labels from rotating
+          minRotation: 0,
           font: {
-            size: 10,
+            size: 8, // Smaller font size for mobile
           },
         },
         grid: {
@@ -269,7 +270,7 @@ const OverallAnalyticsPage: React.FC = () => {
             return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value);
           },
           font: {
-            size: 10,
+            size: 8, // Smaller font size for mobile
           },
         },
         grid: {
