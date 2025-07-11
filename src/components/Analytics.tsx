@@ -58,8 +58,8 @@ const Analytics: React.FC<AnalyticsProps> = ({ player, onSessionChange, refreshK
       const data: Session[] = await response.json();
       const processedData = data.map(session => ({
         ...session,
-        buyIn: parseFloat(session.buyIn as any),
-        cashOut: parseFloat(session.cashOut as any),
+        buyIn: session.buyIn,
+        cashOut: session.cashOut,
         sessionDate: session.sessionDate, // Use the sessionDate string directly as it comes from the database
       }));
       setSessions(processedData);
