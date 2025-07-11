@@ -176,11 +176,7 @@ const OverallAnalyticsPage: React.FC = () => {
   };
 
   const overallDailyProfitChartData = {
-    labels: Object.keys(overallDailyProfit).sort((a, b) => {
-      const dateObjA = new Date(a + 'T00:00:00');
-      const dateObjB = new Date(b + 'T00:00:00');
-      return dateObjA.getTime() - dateObjB.getTime();
-    }),
+    labels: Object.keys(overallDailyProfit).sort((a, b) => a.localeCompare(b)),
     datasets: [
       {
         label: 'Overall Daily Profit/Loss',
