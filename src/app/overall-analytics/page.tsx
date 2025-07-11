@@ -229,9 +229,12 @@ const OverallAnalyticsPage: React.FC = () => {
       x: {
         ticks: {
           color: '#D1D5DB', // gray-300
-          autoSkip: false, // Prevent labels from being skipped
-          maxRotation: 45, // Rotate labels to prevent overlap
-          minRotation: 45,
+          autoSkip: true, // Allow labels to be skipped if they overlap
+          maxRotation: 0, // Prevent labels from rotating
+          minRotation: 0,
+          font: {
+            size: 10, // Smaller font size for mobile
+          },
         },
         grid: {
           color: 'rgba(255, 255, 255, 0.1)',
@@ -242,7 +245,10 @@ const OverallAnalyticsPage: React.FC = () => {
           color: '#D1D5DB', // gray-300
           callback: function(value: any) {
             return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value);
-          }
+          },
+          font: {
+            size: 10, // Smaller font size for mobile
+          },
         },
         grid: {
           color: 'rgba(255, 255, 255, 0.1)',
