@@ -73,24 +73,34 @@ const OverallAnalyticsPage: React.FC = () => {
   const calculateOverallStats = () => {
     const filteredSessions = (startDate || endDate)
       ? allSessions.filter(session => {
+          // --- Start of Debugging Logs ---
           const sessionDateStr = session.sessionDate.split('T')[0];
+          console.log(`Processing session date: ${sessionDateStr}, Filter Start: ${startDate}, Filter End: ${endDate}`);
+
           const sessionDateParts = sessionDateStr.split('-').map(Number);
           const sessionTimestamp = Date.UTC(sessionDateParts[0], sessionDateParts[1] - 1, sessionDateParts[2]);
 
+          let startTimestamp = null;
           if (startDate) {
             const startDateParts = startDate.split('-').map(Number);
-            const startTimestamp = Date.UTC(startDateParts[0], startDateParts[1] - 1, startDateParts[2]);
-            if (sessionTimestamp < startTimestamp) {
-              return false;
-            }
+            startTimestamp = Date.UTC(startDateParts[0], startDateParts[1] - 1, startDateParts[2]);
           }
 
+          let endTimestamp = null;
           if (endDate) {
             const endDateParts = endDate.split('-').map(Number);
-            const endTimestamp = Date.UTC(endDateParts[0], endDateParts[1] - 1, endDateParts[2]);
-            if (sessionTimestamp > endTimestamp) {
-              return false;
-            }
+            endTimestamp = Date.UTC(endDateParts[0], endDateParts[1] - 1, endDateParts[2]);
+          }
+          
+          console.log(`Timestamps -> Session: ${sessionTimestamp}, Start: ${startTimestamp}, End: ${endTimestamp}`);
+          // --- End of Debugging Logs ---
+
+          if (startTimestamp && sessionTimestamp < startTimestamp) {
+            return false;
+          }
+
+          if (endTimestamp && sessionTimestamp > endTimestamp) {
+            return false;
           }
 
           return true;
