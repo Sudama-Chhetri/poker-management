@@ -339,22 +339,30 @@ const OverallAnalyticsPage: React.FC = () => {
         )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
-        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-72 md:h-80 border border-gray-700">
-          <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Net Profit by Player</h3>
-          <Bar data={netProfitChartData} options={chartOptions} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="bg-gray-900 p-4 rounded-lg shadow-xl border border-gray-700">
+          <h3 className="text-xl font-bold mb-4 text-yellow-300">Net Profit by Player</h3>
+          <div className="relative h-96">
+            <Bar data={netProfitChartData} options={chartOptions} />
+          </div>
         </div>
-        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-72 md:h-80 border border-gray-700">
-          <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Win Rate by Player</h3>
-          <Bar data={winRateChartData} options={chartOptions} />
+        <div className="bg-gray-900 p-4 rounded-lg shadow-xl border border-gray-700">
+          <h3 className="text-xl font-bold mb-4 text-yellow-300">Win Rate by Player</h3>
+          <div className="relative h-96">
+            <Bar data={winRateChartData} options={chartOptions} />
+          </div>
         </div>
-        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-72 md:h-80 border border-gray-700">
-          <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Overall Daily Profit/Loss</h3>
-          <Line data={overallDailyProfitChartData} options={chartOptions} />
+        <div className="bg-gray-900 p-4 rounded-lg shadow-xl border border-gray-700">
+          <h3 className="text-xl font-bold mb-4 text-yellow-300">Overall Daily Profit/Loss</h3>
+          <div className="relative h-96">
+            <Line data={overallDailyProfitChartData} options={chartOptions} />
+          </div>
         </div>
-        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-72 md:h-80 border border-gray-700">
-          <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Overall Cumulative Profit Over Time</h3>
-          <Line data={overallCumulativeProfitChartData} options={chartOptions} />
+        <div className="bg-gray-900 p-4 rounded-lg shadow-xl border border-gray-700">
+          <h3 className="text-xl font-bold mb-4 text-yellow-300">Overall Cumulative Profit Over Time</h3>
+          <div className="relative h-96">
+            <Line data={overallCumulativeProfitChartData} options={chartOptions} />
+          </div>
         </div>
       </div>
     </div>
