@@ -4,41 +4,43 @@ import { getConnection } from '../../../../lib/db';
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const playerId = searchParams.get('playerId');
-  const client = await getConnection();
+  let connection;
   try {
-    let query = 'SELECT id, "playerId", "buyIn", "cashOut", "gameType", "sessionDate" FROM sessions';
+    connection = await getConnection();
+    let query = 'SELECT id, playerId, buyIn, cashOut, gameType, sessionDate FROM sessions';
     let params: (string | number)[] = [];
 
     if (playerId) {
-      query += ' WHERE "playerId" = $1';
+      query += ' WHERE playerId = ?';
       params.push(parseInt(playerId));
     }
 
-    const res = await client.query(query, params);
-    return NextResponse.json(res.rows);
+    const [rows] = await connection.execute(query, params);
+    return NextResponse.json(rows);
   } catch (error) {
     console.error('Error fetching sessions:', error);
     return NextResponse.json({ message: 'Error fetching sessions' }, { status: 500 });
   } finally {
-    client.release();
+    if (connection) connection.end();
   }
 }
 
 export async function POST(req: NextRequest) {
   const { playerId, buyIn, cashOut, gameType, sessionDate } = await req.json();
-  const client = await getConnection();
+  let connection;
   try {
-    const res = await client.query(
-      'INSERT INTO sessions ("playerId", "buyIn", "cashOut", "gameType", "sessionDate") VALUES ($1, $2, $3, $4, $5) RETURNING id',
+    connection = await getConnection();
+    const [result] = await connection.execute(
+      'INSERT INTO sessions (playerId, buyIn, cashOut, gameType, sessionDate) VALUES (?, ?, ?, ?, ?)',
       [playerId, buyIn, cashOut, gameType, sessionDate] // sessionDate is already YYYY-MM-DD string
     );
-    const newSessionId = res.rows[0].id;
+    const newSessionId = (result as any).insertId;
     return NextResponse.json({ id: newSessionId, playerId, buyIn, cashOut, gameType, sessionDate }, { status: 201 });
   } catch (error) {
     console.error('Error adding session:', error);
     return NextResponse.json({ message: 'Error adding session' }, { status: 500 });
   } finally {
-    client.release();
+    if (connection) connection.end();
   }
 }
 
@@ -50,11 +52,12 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ message: 'Session ID is required' }, { status: 400 });
   }
 
-  const client = await getConnection();
+  let connection;
   try {
-    const res = await client.query('DELETE FROM sessions WHERE id = $1 RETURNING id', [id]);
+    connection = await getConnection();
+    const [result] = await connection.execute('DELETE FROM sessions WHERE id = ?', [id]);
 
-    if (res.rowCount === 0) {
+    if ((result as any).affectedRows === 0) {
       return NextResponse.json({ message: 'Session not found' }, { status: 404 });
     }
 
@@ -63,6 +66,6 @@ export async function DELETE(req: NextRequest) {
     console.error('Error deleting session:', error);
     return NextResponse.json({ message: 'Error deleting session' }, { status: 500 });
   } finally {
-    client.release();
+    if (connection) connection.end();
   }
 }

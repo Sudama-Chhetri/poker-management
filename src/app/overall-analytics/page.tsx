@@ -60,8 +60,8 @@ const OverallAnalyticsPage: React.FC = () => {
       const sessionsData: Session[] = await sessionsResponse.json();
       const processedSessionsData = sessionsData.map(session => ({
         ...session,
-        buyIn: session.buyIn,
-        cashOut: session.cashOut,
+        buyIn: parseFloat(session.buyIn as any),
+        cashOut: parseFloat(session.cashOut as any),
         sessionDate: session.sessionDate, // Use the sessionDate string directly as it comes from the database
       }));
       setAllSessions(processedSessionsData);
