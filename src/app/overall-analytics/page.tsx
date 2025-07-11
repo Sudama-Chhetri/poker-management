@@ -285,7 +285,7 @@ const OverallAnalyticsPage: React.FC = () => {
       <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center text-yellow-400">Overall Player Analytics</h1>
 
       <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row justify-center items-center gap-4">
-        <div className="flex items-center space-x-2 w-full sm:w-auto">
+        <div className="flex flex-col items-start space-y-1 w-full sm:w-auto">
             <label htmlFor="startDate" className="text-base sm:text-lg font-semibold text-gray-300">From:</label>
             <input
               type="date"
@@ -295,7 +295,7 @@ const OverallAnalyticsPage: React.FC = () => {
               className="bg-gray-800 text-white p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 border border-gray-700 w-full"
             />
         </div>
-        <div className="flex items-center space-x-2 w-full sm:w-auto">
+        <div className="flex flex-col items-start space-y-1 w-full sm:w-auto">
             <label htmlFor="endDate" className="text-base sm:text-lg font-semibold text-gray-300">To:</label>
             <input
               type="date"
