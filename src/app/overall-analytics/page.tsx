@@ -252,7 +252,7 @@ const OverallAnalyticsPage: React.FC = () => {
         ticks: {
           color: '#D1D5DB', // gray-300
           autoSkip: true,
-          autoSkipPadding: 30, // Increased padding to encourage more aggressive skipping
+          autoSkipPadding: 50, // Increased padding to ensure labels remain horizontal by skipping more aggressively
           maxRotation: 0, // Ensure no rotation
           minRotation: 0, // Ensure no rotation
           font: {
@@ -343,25 +343,25 @@ const OverallAnalyticsPage: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="bg-gray-900 p-4 rounded-lg shadow-xl border border-gray-700">
           <h3 className="text-xl font-bold mb-4 text-yellow-300">Net Profit by Player</h3>
-          <div className="relative h-96">
+          <div className="relative h-64 md:h-96">
             <Bar data={netProfitChartData} options={chartOptions} />
           </div>
         </div>
         <div className="bg-gray-900 p-4 rounded-lg shadow-xl border border-gray-700">
           <h3 className="text-xl font-bold mb-4 text-yellow-300">Win Rate by Player</h3>
-          <div className="relative h-96">
+          <div className="relative h-64 md:h-96">
             <Bar data={winRateChartData} options={chartOptions} />
           </div>
         </div>
         <div className="bg-gray-900 p-4 rounded-lg shadow-xl border border-gray-700">
           <h3 className="text-xl font-bold mb-4 text-yellow-300">Overall Daily Profit/Loss</h3>
-          <div className="relative h-96">
+          <div className="relative h-64 md:h-96">
             <Line data={overallDailyProfitChartData} options={chartOptions} />
           </div>
         </div>
         <div className="bg-gray-900 p-4 rounded-lg shadow-xl border border-gray-700">
           <h3 className="text-xl font-bold mb-4 text-yellow-300">Overall Cumulative Profit Over Time</h3>
-          <div className="relative h-96">
+          <div className="relative h-64 md:h-96">
             <Line data={overallCumulativeProfitChartData} options={chartOptions} />
           </div>
         </div>
