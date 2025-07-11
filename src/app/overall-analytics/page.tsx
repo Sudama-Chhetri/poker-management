@@ -304,11 +304,11 @@ const OverallAnalyticsPage: React.FC = () => {
           <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Net Profit by Player</h3>
           <Bar data={netProfitChartData} options={chartOptions} />
         </div>
-        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-64 md:h-80">
+        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-64 md:h-80 border border-gray-800">
           <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Win Rate by Player</h3>
           <Bar data={winRateChartData} options={chartOptions} />
         </div>
-        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-64 md:h-80">
+        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-64 md:h-80 border border-gray-800">
           <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Overall Daily Profit/Loss</h3>
           <Line data={overallDailyProfitChartData} options={chartOptions} />
         </div>
