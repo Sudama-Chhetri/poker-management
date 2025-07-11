@@ -252,11 +252,11 @@ const OverallAnalyticsPage: React.FC = () => {
         ticks: {
           color: '#D1D5DB', // gray-300
           autoSkip: true,
-          autoSkipPadding: 10, // Adjust padding for better spacing
-          maxRotation: 0, // Prevent labels from rotating
-          minRotation: 0,
+          autoSkipPadding: 30, // Increased padding to encourage more aggressive skipping
+          maxRotation: 0, // Ensure no rotation
+          minRotation: 0, // Ensure no rotation
           font: {
-            size: 8, // Smaller font size for mobile
+            size: 8, // Keep font size small for mobile
           },
         },
         grid: {
