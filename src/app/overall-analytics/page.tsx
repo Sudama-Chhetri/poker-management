@@ -243,11 +243,7 @@ const OverallAnalyticsPage: React.FC = () => {
           <p className="text-gray-400 text-base">No sessions recorded for the selected date.</p>
         ) : (
           <ul className="space-y-2">
-            {Object.entries(overallDailyProfit).sort(([dateA], [dateB]) => {
-              const dateObjA = new Date(dateA + 'T00:00:00');
-              const dateObjB = new Date(dateB + 'T00:00:00');
-              return dateObjA.getTime() - dateObjB.getTime();
-            }).map(([date, profit]) => (
+            {Object.entries(overallDailyProfit).sort(([dateA], [dateB]) => dateA.localeCompare(dateB)).map(([date, profit]) => (
               <li key={date} className="flex justify-between items-center bg-gray-800 p-3 rounded-lg border border-gray-700 text-sm md:text-base">
                 <span className="text-gray-200 font-semibold">{formatDateToDDMMYYYY(date)}:</span>
                 <span className={`font-bold ${profit >= 0 ? 'text-green-400' : 'text-red-400'}`}>₹{profit.toFixed(2)}</span>
