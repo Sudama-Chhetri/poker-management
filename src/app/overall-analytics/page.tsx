@@ -230,17 +230,18 @@ const OverallAnalyticsPage: React.FC = () => {
         ticks: {
           color: '#D1D5DB', // gray-300
           autoSkip: true, // Allow labels to be skipped if they overlap
-          autoSkipPadding: 15, // Increased padding between skipped labels
+          autoSkipPadding: 20, // Increased padding between skipped labels
           maxRotation: 0, // Prevent labels from rotating
           minRotation: 0,
           font: {
-            size: 8, // Even smaller font size for mobile
+            size: 8, // Smallest font size for mobile
           },
           padding: 5, // Add padding around labels
         },
         grid: {
           display: false, // Remove grid lines
         },
+        offset: true, // Ensure labels are centered under bars for bar charts
       },
       y: {
         ticks: {
@@ -249,7 +250,7 @@ const OverallAnalyticsPage: React.FC = () => {
             return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value);
           },
           font: {
-            size: 8, // Even smaller font size for mobile
+            size: 8, // Smallest font size for mobile
           },
         },
         grid: {
