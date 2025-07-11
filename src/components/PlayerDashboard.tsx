@@ -112,17 +112,17 @@ export const PlayerDashboard: React.FC<PlayerDashboardProps> = ({ players, setPl
   return (
     <div className="bg-gray-900 p-6 rounded-lg shadow-xl border border-gray-700">
       <h2 className="text-3xl font-extrabold mb-6 text-center text-blue-400">Player Dashboard</h2>
-      <div className="flex mb-6">
+      <div className="flex flex-col md:flex-row mb-6">
         <input
           type="text"
           value={newPlayerName}
           onChange={(e) => setNewPlayerName(e.target.value)}
-          className="flex-grow bg-gray-800 text-white p-3 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
+          className="flex-grow bg-gray-800 text-white p-3 rounded-t-lg md:rounded-l-lg md:rounded-t-none focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 mb-2 md:mb-0"
           placeholder="Enter new player name"
         />
         <button
           onClick={handleAddPlayer}
-          className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-r-lg font-semibold transition duration-200 ease-in-out transform hover:scale-105"
+          className="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-b-lg md:rounded-r-lg md:rounded-b-none font-semibold transition duration-200 ease-in-out transform hover:scale-105"
         >
           Add Player
         </button>

@@ -15,11 +15,11 @@ const Navbar: React.FC = () => {
           </svg>
           <span>Poker Tracker</span>
         </Link>
-        <div className="space-x-4">
-          <Link href="/" className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-md text-lg font-medium transition duration-200 shadow-md">
+        <div className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4">
+          <Link href="/" className="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded-md text-base md:text-lg font-medium transition duration-200 shadow-md text-center">
             Dashboard
           </Link>
-          <Link href="/overall-analytics" className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-md text-lg font-medium transition duration-200 shadow-md">
+          <Link href="/overall-analytics" className="bg-yellow-600 hover:bg-yellow-700 text-white px-3 py-1 rounded-md text-base md:text-lg font-medium transition duration-200 shadow-md text-center">
             Overall Analytics
           </Link>
         </div>
