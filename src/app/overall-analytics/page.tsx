@@ -253,21 +253,21 @@ const OverallAnalyticsPage: React.FC = () => {
         )}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-gray-900 p-4 rounded-lg shadow-xl h-64 md:h-80 border border-gray-800">
-          <h3 className="text-lg md:text-xl font-bold mb-4 text-yellow-300">Net Profit by Player</h3>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-8">
+        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-64 md:h-80 border border-gray-800">
+          <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Net Profit by Player</h3>
           <Bar data={netProfitChartData} options={{ maintainAspectRatio: false }} />
         </div>
-        <div className="bg-gray-900 p-4 rounded-lg shadow-xl h-64 md:h-80">
-          <h3 className="text-lg md:text-xl font-bold mb-4 text-yellow-300">Win Rate by Player</h3>
+        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-64 md:h-80">
+          <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Win Rate by Player</h3>
           <Bar data={winRateChartData} options={{ maintainAspectRatio: false }} />
         </div>
-        <div className="bg-gray-900 p-4 rounded-lg shadow-xl h-64 md:h-80">
-          <h3 className="text-lg md:text-xl font-bold mb-4 text-yellow-300">Overall Daily Profit/Loss</h3>
+        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-64 md:h-80">
+          <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Overall Daily Profit/Loss</h3>
           <Line data={overallDailyProfitChartData} options={{ maintainAspectRatio: false }} />
         </div>
-        <div className="bg-gray-900 p-4 rounded-lg shadow-xl h-64 md:h-80 border border-gray-800">
-          <h3 className="text-lg md:text-xl font-bold mb-4 text-yellow-300">Overall Cumulative Profit Over Time</h3>
+        <div className="bg-gray-900 p-3 md:p-4 rounded-lg shadow-xl h-64 md:h-80 border border-gray-800">
+          <h3 className="text-lg md:text-xl font-bold mb-3 md:mb-4 text-yellow-300">Overall Cumulative Profit Over Time</h3>
           <Line data={overallCumulativeProfitChartData} options={{ maintainAspectRatio: false }} />
         </div>
       </div>
